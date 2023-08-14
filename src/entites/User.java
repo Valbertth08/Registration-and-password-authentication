@@ -1,7 +1,5 @@
 package entites;
 
-
-
 public class User {
 
 	private String name;
@@ -31,5 +29,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }
