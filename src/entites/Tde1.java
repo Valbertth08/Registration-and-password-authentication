@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 public class Tde1 {
 
-	public static void main(String[] args) {
-		int i = 4;
+	int i = 4;
 		Scanner sc = new Scanner(System.in);
 		int valor=0;
+		Boolean bool = null;
 		do {
+			bool=true;
+			
 			if(i<4) {
 				System.out.println();
 				System.out.println("Você só tem mais "+(i)+" tentativas.");
@@ -21,38 +23,42 @@ public class Tde1 {
 			String senha = sc.next();
 
 			if (!senha.matches("(?=.*[A-Z]).*")) {
+				
 				valor=1;
+				bool=false;
 				metodo(valor);
 			}
 			if (!senha.matches("(?=.*[a-z]).*")) {
 				valor=2;
+				bool=false;
 				metodo(valor);
 			} 
 			
 			if(!senha.matches("(?=.*[0-9]).*")) {
 				valor=3;
+				bool=false;
 				metodo(valor);
 			}
 			
 			if(!senha.matches("(?=.*[@#$%^&+=]).*")) {
+				bool=false;
 				valor=4;
 				metodo(valor);
 			}
-			else {
-				i = 5;
-				System.out.println("Senha cadastrada");
-			}
+			
 			i--;
-		} while (i !=0 && i !=4 );
-
-		if (i == 0) {
+		} while (i !=0 && bool!=true );
+	
+		if(bool == true) {
+			System.out.println("Senha cadastrada");
+		}
+		else if (i == 0) {
 			System.out.println();
 			System.out.println("Suas tentativas acabaram");
 		}
 		sc.close();
 
 	}
-	
 	public static void metodo(int op) {
 		
 		switch(op){
@@ -71,7 +77,5 @@ public class Tde1 {
 				break;
 			
 			}
-		
-		}	
 		
 }
