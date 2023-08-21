@@ -7,28 +7,36 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
-import javax.swing.*;
 import javax.security.auth.login.CredentialException;
 
 public class Account {
 
-	public static boolean registerAccount(User user, Scanner sc) {
+	public static boolean registerAccount(Scanner sc) {
 		int value = 0;
 
-		if (!user.getPassword().matches("(?=.*[A-Z]).*")) {
+		System.out.println();
+		System.out.println("--------CADASTRO-------");
+		System.out.println();
+		System.out.print("Digite seu usuario: ");
+		String user = sc.next();
+		System.out.print("Digite sua senha: ");
+		String senha = sc.next();
+
+		User us = new User(user, senha);
+
+		if (!us.getPassword().matches("(?=.*[A-Z]).*")) {
 			value = 1;
 			verificationPassword(value);
 		}
-		if (!user.getPassword().matches("(?=.*[a-z]).*")) {
+		if (!us.getPassword().matches("(?=.*[a-z]).*")) {
 			value = 2;
 			verificationPassword(value);
 		}
-		if (!user.getPassword().matches("(?=.*[0-9]).*")) {
+		if (!us.getPassword().matches("(?=.*[0-9]).*")) {
 			value = 3;
 			verificationPassword(value);
 		}
-		if (!user.getPassword().matches("(?=.*[@#$%^&+=]).*")) {
+		if (!us.getPassword().matches("(?=.*[@#$%^&+=]).*")) {
 			value = 4;
 			verificationPassword(value);
 		}
@@ -37,25 +45,25 @@ public class Account {
 
 			System.out.print("Digite sua senha novamente: ");
 			String passaword = sc.next();
-			if (passaword.equals(user.getPassword())) {
+			if (passaword.equals(us.getPassword())) {
 
 				File path = new File("C:\\TDE");
 				if (!path.exists()) {
 					Boolean p = new File("C:\\TDE").mkdir();
 				}
 				try (BufferedWriter bw = new BufferedWriter(new FileWriter(path + "\\path.txt", true))) {
-					bw.write(user.getName() + "," + user.getPassword());
+					bw.write(us.getName() + "," + us.getPassword());
 					bw.newLine();
 					System.out.print("Registro realizado");
 					System.out.println();
-					return true;					
+					return true;
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}
 			} else {
-				System.out.println("Senhas não coincidem, tente novamente");
+				System.out.println("Senhas não coincidem, tente novamente.");
 			}
-			
+
 		}
 		return false;
 	}
@@ -74,8 +82,7 @@ public class Account {
 				throw new CredentialException("Ta faltando  caractere especial");
 			}
 		} catch (CredentialException e) {
-			System.out.println( e.getMessage());
-			JOptionPane.showMessageDialog(null,"erro"+e.toString(),"Erro", JOptionPane.ERROR_MESSAGE);
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -102,6 +109,7 @@ public class Account {
 						i = 4;
 						System.out.print("Login efetuado");
 						verificador = true;
+						System.out.println();
 						break;
 					}
 					rw = br.readLine();
@@ -123,6 +131,25 @@ public class Account {
 
 		if (i == 3) {
 			System.out.println("Suas tentativas acabaram, tente novamente mais tarde.");
+			System.out.println();
 		}
 	}
+
+	public static void options(Scanner sc) {
+		System.out.println();
+		System.out.println("-------Bem vindo a tela inicial--------\n" + "1. Cadastra usuario\n2. Login");
+		System.out.println();
+		System.out.print("Opção: ");
+		int option = sc.nextInt();
+
+		if (option == 1) {
+			registerAccount(sc);
+			options(sc);
+		} else {
+			login(sc);
+			options(sc);
+		}
+
+	}
+
 }
