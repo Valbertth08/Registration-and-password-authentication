@@ -1,7 +1,4 @@
 package aplication;
-
-import java.util.Scanner;
-
 import entites.Account;
 
 public class Program {

@@ -1,4 +1,4 @@
-package entites;
+	package entites;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,7 +40,7 @@ public class Account {
 			value = 3;
 			verificationPassword(value);
 		}
-		if (!us.getPassword().matches("(?=.*[@#$%^&+=]).*")) {
+		if (!us.getPassword().matches("(?=.*[@#$%^&+=|//_-]).*")) {
 			value = 4;
 			verificationPassword(value);
 		}
@@ -150,7 +150,7 @@ public class Account {
 	public static void options() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("-------Bem vindo a tela inicial--------\n");
-		sb.append("1. Cadastra usuario\n");
+		sb.append("1. Cadastrar usuario\n");
 		sb.append("2. Login\n");
 		sb.append("3. Sair\n");
 		char option = JOptionPane.showInputDialog(sb).charAt(0);
